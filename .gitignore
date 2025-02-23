@@ -1,0 +1,28 @@
+# ROS 2 build artifacts
+build/
+install/
+log/
+
+# Colcon cache
+.colcon/
+
+# ROS 2 workspace-specific files
+src/ros2_ws/build/
+src/ros2_ws/install/
+src/ros2_ws/log/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# VS Code settings
+.vscode/
+
+# JetBrains settings (CLion, PyCharm)
+.idea/
+
+# System files
+.DS_Store
+Thumbs.db
