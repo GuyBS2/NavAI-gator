@@ -1,0 +1,24 @@
+Visualization Manager:
+  Class: "" # Empty default class
+  Displays:
+    - Name: Global Options
+      Class: rviz/GlobalOptions
+      Fixed Frame: base_link
+
+    - Name: RobotModel
+      Class: rviz/RobotModel
+      Description Topic: "robot_description"
+      Enabled: true
+
+    - Name: TF
+      Class: rviz/TF
+      Enabled: true
+
+    - Name: Grid
+      Class: rviz/Grid
+      Enabled: true
+      Plane Cell Count: 10
+
+    - Name: Axes
+      Class: rviz/Axes
+      Enabled: true

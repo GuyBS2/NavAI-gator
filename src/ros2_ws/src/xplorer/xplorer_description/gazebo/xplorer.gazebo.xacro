@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Include physics settings -->
+  <xacro:include filename="$(find xplorer_description)/gazebo/physics.gazebo.xacro"/>
+  
+  <!-- Include sensor plugins -->
+  <xacro:include filename="$(find xplorer_description)/gazebo/sensors.gazebo.xacro"/>
+
+  <!-- Add Gazebo reference -->
+  <gazebo>
+    <static>false</static>
+    <selfCollide>false</selfCollide>
+  </gazebo>
+</robot>
