@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<robot name="xplorer" xmlns:xacro="http://wiki.ros.org/xacro">
+
+    <!-- ****************** -->
+    <!--   Wheel Properties -->
+    <!-- ****************** -->
+
+    <xacro:property name="battery_highet" value="0.195" />
+    <xacro:property name="battery_width" value="0.135" />
+    <xacro:property name="battery_length" value="0.170" />
+    <xacro:property name="battery_mass" value="8.0" />
+
+  <xacro:macro name="battery" params="prefix parent *origin">
+
+	  <link name="${prefix}_link">
+      <visual>
+	      <origin rpy="0 0 0" xyz="0 0 0 "/>
+	      <geometry>
+	        <mesh filename="file://$(find xplorer_description)/meshes/Battery_11v_1800mah.stl" />
+	      </geometry>
+	    </visual>
+	    <collision>
+	      <origin rpy="0 0 0" xyz="0 0 0 "/>
+	      <geometry>
+	        <mesh filename="file://$(find xplorer_description)/meshes/Battery_11v_1800mah.stl" />
+	      </geometry>
+	    </collision>
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <mass value="${battery_mass}" />
+        <xacro:box_inertia m="${battery_mass}" x="${battery_width}" y="${battery_highet}" z="${battery_length}" />
+      </inertial>
+	  </link>
+
+    <joint name="${prefix}_joint" type="fixed">
+      <axis xyz="0 0 0"/>
+      <xacro:insert_block name="origin"/>
+      <parent link="${parent}"/>
+      <child link="${prefix}_link"/>
+    </joint>
+
+  </xacro:macro>
+    
+</robot>

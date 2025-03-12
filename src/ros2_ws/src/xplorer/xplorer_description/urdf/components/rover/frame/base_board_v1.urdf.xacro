@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<robot name="xplorer" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- ****************** -->
+    <!--   Frame Properties -->
+    <!-- ****************** -->
+
+    <xacro:property name="frame_length" value="0.220" />
+    <xacro:property name="frame_width" value="0.220" />
+    <xacro:property name="frame_height" value="0.053" />
+    <xacro:property name="frame_mass" value="0.2" />
+
+    <!-- Link definition -->
+
+    <xacro:macro name="main_frame" params="prefix parent *origin">
+
+        <link name="${prefix}_body_frame_link">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <material name="white" />
+                <geometry>
+                    <mesh filename="file://$(find xplorer_description)/meshes/base_board_v1.stl" />
+                </geometry>
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0.236842"/>
+                <geometry>
+                    <mesh filename="file://$(find xplorer_description)/meshes/base_board_v1.stl" />
+                </geometry>
+            </collision>
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <mass value="${frame_mass}" />
+                <xacro:box_inertia m="${frame_mass}" x="${frame_width}" y="${frame_height}" z="${frame_length}" />
+            </inertial>
+        </link>
+
+    </xacro:macro>
+
+    <!-- Joint definition -->
+
+        <joint name="${prefix}_body_frame_joint" type="fixed">
+            <axis xyz="1 0 0"/>
+            <xacro:insert_block name="origin"/>
+            <parent link="${parent}"/>
+            <child link="${prefix}_body_frame_link"/>
+        </joint>
+
+  </xacro:macro>
+
+</robot>

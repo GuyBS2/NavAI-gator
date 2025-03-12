@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<robot name="drba_light_220_v1" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- ***************** -->
+    <!-- Imported elements -->
+    <!-- ***************** -->
+
+    <!-- Import general properties -->
+
+    <xacro:include filename="$(find xplorer_description)/urdf/macros.xacro" />
+
+    <!-- Import rover -->
+
+    <xacro:include filename="$(find xplorer_description)/urdf/components/rover/sdr_pcs1500.urdf.xacro" />
+
+    <!-- Import body -->
+
+    <!-- <xacro:include filename="$(find xplorer_description)/urdf/components/rover/body/main_frame.urdf.xacro" /> -->
+
+    <!-- Import payload -->
+
+
+    <!-- Import sensors -->
+
+    <xacro:include filename="$(find xplorer_description)/urdf/components/sensors/rplidar_s2.urdf.xacro" />
+    <xacro:include filename="$(find xplorer_description)/urdf/components/sensors/um7_imu.urdf.xacro" />
+
+    <!-- Import simulation data for gazebo -->
+
+    <xacro:include filename="$(find pico_description)/urdf/robots/pico_assembly.gazebo.xacro" />
+  
+  
+    <!-- ***************** -->
+    <!--    parameters     -->
+    <!-- ***************** -->
+
+    <xacro:property name="rover_position_x" value="0" />
+    <xacro:property name="rover_position_y" value="0" />
+    <xacro:property name="rover_position_z" value="0" />
+
+    <xacro:property name="body_position_x" value="0" />
+    <xacro:property name="body_position_y" value="0" />
+    <xacro:property name="body_position_z" value="0" />
+
+    <xacro:property name="rplidar_position_x" value="0" />
+    <xacro:property name="rplidar_position_y" value="0.25" />
+    <xacro:property name="rplidar_position_z" value="-0.25" />
+
+    <xacro:property name="imu_position_x" value="0.05" />
+    <xacro:property name="imu_position_y" value="0.0" />
+    <xacro:property name="imu_position_z" value="0.06" />
+    
+
+    <!-- ***************** -->
+    <!--     Assembly      -->
+    <!-- ***************** -->
+
+    <!--    rover   -->
+  
+
+    <!--    body    -->
+
+    <!--    payload -->
+
+
+    <!--    sensors -->
+
+</robot>

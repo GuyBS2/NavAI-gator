@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<robot name="drba_light_220_v1" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- ***************** -->
+  <!-- Imported elements -->
+  <!-- ***************** -->
+  
+  <!-- Import base -->
+
+  <xacro:include filename="$(find xplorer_description)/urdf/components/rover/base/.urdf.xacro" />
+
+  <!-- Import battery -->
+
+  <xacro:include filename="$(find xplorer_description)/urdf/components/rover/battery/.urdf.xacro" />
+
+  <!-- Import motor -->
+
+  <xacro:include filename="$(find xplorer_description)/urdf/components/rover/motor/.urdf.xacro" />
+
+  <!-- Import wheel -->
+
+  <xacro:include filename="$(find xplorer_description)/urdf/components/rover/wheel/.urdf.xacro" />
+
+  <!-- Import simulation data for gazebo -->
+
+  <xacro:include filename="$(find xplorer_description)/urdf/components/rover/.gazebo.xacro" />
+  
+  
+  <!-- ***************** -->
+  <!--    parameters     -->
+  <!-- ***************** -->
+
+  <xacro:property name="chassis_position_x" value="0" />
+  <xacro:property name="chassis_position_y" value="0" />
+  <xacro:property name="chassis_position_z" value="0.286745" />
+
+  <xacro:property name="battery_offest_x" value="0.18" />
+  <xacro:property name="battery_offest_y" value="0" />
+  <xacro:property name="battery_offest_z" value="-0.0667745" />
+  
+  <xacro:property name="right_motor_offest_x" value="0.35679" />
+  <xacro:property name="right_motor_offest_y" value="0.20955" />
+  <xacro:property name="right_motor_offest_z" value="-0.107455" />
+
+  <xacro:property name="left_motor_offest_x" value="0" />
+  <xacro:property name="left_motor_offest_y" value="0.20955" />
+  <xacro:property name="left_motor_offest_z" value="-0.11698" />
+
+  <xacro:property name="right_wheel_offest_x" value="0.35679" />
+  <xacro:property name="right_wheel_offest_y" value="0.28" />
+  <xacro:property name="right_wheel_offest_z" value="-0.107455" />
+
+  <xacro:property name="left_wheel_offest_x" value="0" />
+  <xacro:property name="left_wheel_offest_y" value="0.28" />
+  <xacro:property name="left_wheel_offest_z" value="-0.11698" />
+
+  <!-- ***************** -->
+  <!--     Assembly      -->
+  <!-- ***************** -->
+
+  <xacro:macro name="drba_light_220_v1" params="prefix base *origin">
+
+    <!--  chassis  -->
+
+    <xacro:pcs1500_chassis prefix="pcs1500" parent="${base}">
+      <origin rpy="0 0 0" xyz="${chassis_position_x} ${chassis_position_y} ${chassis_position_z}"/>
+    </xacro:pcs1500_chassis>
+
+    <!--   battery  -->
+
+    <xacro:battery prefix="front_battery" parent="pcs1500_base_link">
+      <origin rpy="0 ${-PI/2} 0" xyz="${battery_offest_x} ${battery_offest_y} ${battery_offest_z}"/>
+    </xacro:battery>
+
+    <xacro:battery prefix="rear_battery" parent="pcs1500_base_link">
+      <origin rpy="0 ${-PI/2} 0" xyz="${battery_offest_x*-1} ${battery_offest_y} ${battery_offest_z}"/>
+    </xacro:battery>
+
+    <!--  motor   -->
+    
+    <xacro:motor prefix="right" parent="pcs1500_base_link">
+      <origin rpy="0 0 ${-PI/2}" xyz="${front_motor_offest_x} ${front_motor_offest_y*-1} ${front_motor_offest_z}"/>
+    </xacro:motor> 
+
+    <xacro:motor prefix="left" parent="pcs1500_base_link">
+      <origin rpy="0 0 ${PI/2}" xyz="${front_motor_offest_x} ${front_motor_offest_y} ${front_motor_offest_z}"/>
+    </xacro:motor>
+
+    <!--  wheels  -->
+
+    <xacro:wheel prefix="right" parent="pcs1500_base_link" sinking="0">
+      <origin rpy="0 0 0" xyz="${front_wheel_offest_x} ${front_wheel_offest_y*-1} ${front_wheel_offest_z}"/>
+    </xacro:wheel> 
+
+    <xacro:wheel prefix="left" parent="pcs1500_base_link" sinking="0">
+      <origin rpy="0 0 0" xyz="${front_wheel_offest_x} ${front_wheel_offest_y} ${front_wheel_offest_z}"/>
+    </xacro:wheel>
+  
+  </xacro:macro>
+
+  <!--  Plugins  -->
+  
+  <xacro:diff_drive_plugin frame="pcs1500_base_link"
+                           left="left_wheel_joint"
+                           right="right_wheel_joint"
+  />
+
+  <xacro:joint_state_plugin left="left_wheel_joint"
+                            right="right_left_wheel_joint"
+  />
+
+</robot>

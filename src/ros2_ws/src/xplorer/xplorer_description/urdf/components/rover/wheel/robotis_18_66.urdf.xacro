@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<robot name="xplorer" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ****************** -->
+  <!--   Wheel Properties -->
+  <!-- ****************** -->
+
+  <xacro:property name="wheel_radius" value="0.033"/>   <!-- 66mm diameter -->
+  <xacro:property name="wheel_width" value="0.018"/>    <!-- 18mm width -->
+  <xacro:property name="wheel_mass" value="0.032"/>     <!-- 32g -->
+
+  <!-- Wheel Link -->
+
+  <xacro:macro name="wheel" params="prefix parent sinking *origin">
+
+    <link name="${prefix}_wheel_link">
+      <inertial>
+        <mass value="${wheel_mass}" />
+        <xacro:wheel_inertia m="${wheel_mass}" r="${wheel_radius}" h="${wheel_width}" />
+      </inertial>
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0 "/>
+        <geometry>
+          <mesh filename="file://$(find xplorer_description)/meshes/Robotis_18_66.stl" />
+        </geometry>
+        <material name="dark_grey"/>
+      </visual>
+      <collision>
+        <origin rpy="${PI/2} 0 0" xyz="0 0 0 "/>
+        <geometry>
+          <cylinder radius="${wheel_radius-sinking}" length="${wheel_width}"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}_wheel_joint" type="continuous">
+      <parent link="${parent}"/>
+      <child link="${prefix}_wheel_link"/>
+      <xacro:insert_block name="origin" />
+      <axis xyz="0 1 0"/>
+    </joint>
+
+    <gazebo reference="${prefix}_wheel_link">
+      <mu1>0.4</mu1>
+      <mu2>0.2</mu2>
+      <kp value="10000000.0" />
+      <kd value="1.0" />
+      <fdir1 value="1 0 0" />
+      <material>Gazebo/Black</material>
+    </gazebo>
+
+  </xacro:macro>
+
+</robot>

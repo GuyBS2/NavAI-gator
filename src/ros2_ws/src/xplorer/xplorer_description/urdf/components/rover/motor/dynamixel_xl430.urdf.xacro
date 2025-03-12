@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<robot name="xplorer" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ********************************* -->
+  <!--   XL430-W250-T Servo Properties   -->
+  <!-- ********************************* -->
+
+  <xacro:property name="servo_length" value="0.0465"/> <!-- 46.5 mm -->
+  <xacro:property name="servo_width" value="0.0285"/>  <!-- 28.5 mm -->
+  <xacro:property name="servo_height" value="0.034"/>  <!-- 34 mm   -->
+  <xacro:property name="servo_mass" value="0.0572"/>   <!-- 57.2 g  -->
+
+  <!-- Servo Link -->
+
+  <link name="xl430_w250t_link">
+    <visual>
+      <geometry>
+         <mesh filename="file://$(find xplorer_description)/meshes/XL430_W250_T.stl" />
+      </geometry>
+      <material name="gray"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find xplorer_description)/meshes/XL430_W250_T.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="${servo_mass}"/>
+      <xacro:box_inertia m="${servo_mass}" x="${servo_width}" y="${servo_height}" z="${servo_length}" />
+    </inertial>
+  </link>
+
+  <!-- Servo Joint -->
+  
+  <joint name="xl430_w250t_joint" type="revolute">
+    <parent link="parent_link"/>
+    <child link="xl430_w250t_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="1.5" velocity="1.0" lower="-1.57" upper="1.57"/>
+  </joint>
+
+</robot>
